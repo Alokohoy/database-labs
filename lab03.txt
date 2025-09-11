@@ -1,0 +1,18 @@
+burkhan@Burkhans-MacBook-Pro ~ % psql -h localhost -p 5432 -U burkhan -d postgres
+
+psql (14.19 (Homebrew))
+Type "help" for help.
+
+postgres=# CREATE DATABASE university;
+
+CREATE DATABASE
+postgres=# \c university 
+You are now connected to database "university" as user "burkhan".
+university=# 
+psql -d university -U burkhan
+
+postgres=# DROP DATABASE university;
+
+DROP DATABASE
+postgres=# \q
+burkhan@Burkhans-MacBook-Pro ~ % 
