@@ -1,0 +1,93 @@
+burkhan@Burkhans-MacBook-Pro labs % psql -h localhost -p 5432 -U burkhan -d postgres
+
+psql (14.19 (Homebrew))
+Type "help" for help.
+
+
+CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    faculty VARCHAR(100)
+);
+
+postgres=# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner  
+--------+----------+-------+---------
+ public | students | table | burkhan
+(1 row)
+
+postgres=# \d students
+                                          Table "public.students"
+   Column   |          Type          | Collation | Nullable |                   Default                    
+------------+------------------------+-----------+----------+----------------------------------------------
+ student_id | integer                |           | not null | nextval('students_student_id_seq'::regclass)
+ first_name | character varying(50)  |           | not null | 
+ last_name  | character varying(50)  |           | not null | 
+ email      | character varying(100) |           | not null | 
+ faculty    | character varying(100) |           |          | 
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email)
+
+
+
+postgres=# ALTER TABLE students
+postgres-# ADD COLUMN date_of_birth DATE;
+ALTER TABLE
+
+postgres=# ALTER TABLE students
+postgres-# DROP COLUMN faculty;
+ALTER TABLE
+
+postgres=# \d students
+                                           Table "public.students"
+    Column     |          Type          | Collation | Nullable |                   Default                    
+---------------+------------------------+-----------+----------+----------------------------------------------
+ student_id    | integer                |           | not null | nextval('students_student_id_seq'::regclass)
+ first_name    | character varying(50)  |           | not null | 
+ last_name     | character varying(50)  |           | not null | 
+ email         | character varying(100) |           | not null | 
+ date_of_birth | date                   |           |          | 
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email)
+
+postgres=# ALTER TABLE students
+postgres-# ALTER COLUMN first_name TYPE TEXT;
+ALTER TABLE
+
+postgres=# ALTER TABLE students
+postgres-# ADD CONSTRAINT unique_student_email UNIQUE (email);
+ALTER TABLE
+
+postgres=# ALTER TABLE students
+RENAME COLUMN email TO email_adress;
+ALTER TABLE
+
+postgres=# \d students
+                                           Table "public.students"
+    Column     |          Type          | Collation | Nullable |                   Default                    
+---------------+------------------------+-----------+----------+----------------------------------------------
+ student_id    | integer                |           | not null | nextval('students_student_id_seq'::regclass)
+ first_name    | text                   |           | not null | 
+ last_name     | character varying(50)  |           | not null | 
+ email_adress  | character varying(100) |           | not null | 
+ date_of_birth | date                   |           |          | 
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email_adress)
+    "unique_student_email" UNIQUE CONSTRAINT, btree (email_adress)
+
+
+postgres=# CREATE TEMP TABLE temp_students (
+postgres(# student_id SERIAL PRIMARY KEY,
+postgres(# name VARCHAR(50)
+postgres(# );
+CREATE TABLE
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# \q
+burkhan@Burkhans-MacBook-Pro labs % 
