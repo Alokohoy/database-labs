@@ -1,0 +1,40 @@
+burkhan@Burkhans-MacBook-Pro ~ % psql -h localhost -p 5432 -U burkhan -d postgres
+psql (14.19 (Homebrew))
+Type "help" for help.
+
+postgres=# \dt
+               List of relations
+ Schema |        Name        | Type  |  Owner  
+--------+--------------------+-------+---------
+ public | students           | table | burkhan
+ public | departments        | table | burkhan
+ public | course_enrollments | table | burkhan
+ public | customers          | table | burkhan
+ public | orders             | table | burkhan
+ public | students_bad       | table | burkhan
+
+(6 rows)
+
+postgres-# \d
+                    List of relations
+ Schema |           Name            |   Type   |  Owner  
+--------+---------------------------+----------+---------
+ public | course_enrollments        | table    | burkhan
+ public | customers                 | table    | burkhan
+ public | customers_customer_id_seq | sequence | burkhan
+ public | orders                    | table    | burkhan
+ public | orders_order_id_seq       | sequence | burkhan
+(5 rows)
+postgres-# \d course_enrollments
+                       Table "public.course_enrollments"
+     Column      |         Type          | Collation | Nullable |   Default    
+-----------------+-----------------------+-----------+----------+--------------
+ student_id      | integer               |           | not null | 
+ course_id       | integer               |           | not null | 
+ semester        | character varying(20) |           | not null | 
+ enrollment_date | date                  |           |          | CURRENT_DATE
+ grade           | character(2)          |           |          | 
+Indexes:
+    "course_enrollments_pkey" PRIMARY KEY, btree (student_id, course_id, semester)
+
+postgres-# \q
