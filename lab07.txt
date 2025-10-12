@@ -1,0 +1,74 @@
+burkhan@Burkhans-MacBook-Pro labs % psql -h localhost -p 5432 -U burkhan -d postgres
+
+psql (14.19 (Homebrew))
+Type "help" for help.
+
+postgres=# CREATE TABLE students_bad (
+student_id INT PRIMARY KEY, name VARCHAR (100) ,
+phone_numbers TEXT -- "123-456-7890, 098-765-4321"
+);
+CREATE TABLE
+postgres=# CREATE TABLE students (
+student_id INT PRIMARY KEY, name VARCHAR (100)
+);
+CREATE TABLE
+
+postgres=# CREATE TABLE student_phones ( student_id INT,
+phone_number VARCHAR (15) ,
+phone_type VARCHAR (20),
+PRIMARY KEY (student_id, phone_number),
+FOREIGN KEY (student_id) REFERENCES students(student_id));
+CREATE TABLE
+
+postgres=# CREATE TABLE enrollments_bad (
+student_id INT,
+course_id INT,
+course_name VARCHAR(100),
+grade CHAR (2),
+PRIMARY KEY (student_id, course_id)
+);
+CREATE TABLE
+
+postgres=# CREATE TABLE courses (
+course_id INT PRIMARY KEY,
+course_name VARCHAR (100), 
+credits INT
+);
+CREATE TABLE
+postgres=# CREATE TABLE enrollments (
+student_id INT,
+course_id INT,
+grade CHAR (2) ,
+PRIMARY KEY (student_id, course_id),
+FOREIGN KEY (student_id) REFERENCES students(student_id),
+FOREIGN KEY (course_id) REFERENCES courses(course_id));
+CREATE TABLE
+
+postgres=# DROP TABLE students_bad;
+DROP TABLE
+
+postgres=# CREATE TABLE students_bad (
+student_id INT PRIMARY KEY, name VARCHAR (100), department_id INT,
+department_name VARCHAR(100)
+);
+CREATE TABLE
+postgres=# DROP TABLE departments;
+DROP TABLE
+postgres=# CREATE TABLE departments (
+department_id INT PRIMARY KEY,
+department_name VARCHAR (100),
+department_head VARCHAR (100)
+);
+CREATE TABLE
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# CREATE TABLE students (
+student_id INT PRIMARY KEY,
+name VARCHAR (100),
+department_id INT,
+FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+CREATE TABLE
+
+postgres=# \q
+burkhan@Burkhans-MacBook-Pro ~ % 
