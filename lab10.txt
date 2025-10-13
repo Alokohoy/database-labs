@@ -1,0 +1,111 @@
+postgres=# SELECT * FROM employees;
+ id | name | department | salary
+----+------+------------+--------
+(1 row)
+postgres=# SELECT name, department FROM employees;
+
+postgres=# SELECT name, department 
+postgres=# FROM employees;
+ name | department
+------+------------
+(1 row)
+postgres=# SELECT name, salary, salary * 0.10 AS potential_bonus
+postgres=# FROM employees;
+ name | salary | potential_bonus
+------+--------+-----------------
+(1 row)
+postgres=# SELECT name, salary
+postgres=# FROM employees
+postgres=# WHERE department = 'Sales';
+ name | salary
+------+--------
+(1 row)
+
+postgres=# SELECT name
+postgres=# FROM employees
+postgres=# WHERE salary > 75000 AND department = 'Engineering';
+ name
+------
+(1 row)
+postgres=# SELECT product_name, price
+postgres=# FROM products
+postgres=# WHERE price BETWEEN 20 AND 50;
+ product_name | price
+--------------+-------
+( n rows)
+
+postgres=# SELECT product_name, price
+postgres=# FROM products
+postgres=# WHERE price BETWEEN 20 AND 50;
+ product_name | price
+--------------+-------
+postgres=# SELECT customer_name
+postgres=# FROM customers
+postgres=# WHERE customer_name LIKE 'Bra%';
+ customer_name
+---------------
+postgres=# SELECT product_name
+postgres=# FROM products
+postgres=# WHERE product_name LIKE '%berry';
+ product_name
+--------------
+postgres=# SELECT email
+postgres=# FROM users
+postgres=# WHERE email ILIKE '%@gmail.com';
+ email
+-------
+postgres=# SELECT name
+postgres=# FROM employees
+postgres=# WHERE name ~ '^[AB]';
+ name
+------
+postgres=# SELECT email
+postgres=# FROM users
+postgres=# WHERE email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$';
+ email
+-------
+postgres=# SELECT name
+postgres=# FROM employees
+postgres=# WHERE id IN (
+postgres=# SELECT employee_id FROM sales WHERE amount > 1000
+postgres=# );
+ name
+------
+postgres=# SELECT name
+postgres=# FROM employees e
+postgres=# WHERE EXISTS (
+postgres=#   SELECT 1
+postgres=#   FROM sales s
+postgres=#   WHERE s.employee_id = e.id AND s.amount > 1000
+postgres=# );
+ name
+------
+postgres=# SELECT name, salary,
+postgres=#   CASE
+postgres=#     WHEN salary > 100000 THEN 'Senior'
+postgres=#     WHEN salary BETWEEN 60000 AND 100000 THEN 'Mid-Level'
+postgres=#     ELSE 'Junior'
+postgres=#   END AS employee_level
+postgres=# FROM employees;
+ name | salary | employee_level
+------+--------+----------------
+postgres=# WITH department_averages AS (
+postgres=#   SELECT
+postgres=#     department,
+postgres=#     AVG(salary) AS avg_salary
+postgres=#   FROM employees
+postgres=#   GROUP BY department
+postgres=# )
+postgres=# SELECT
+postgres=#   e.name,
+postgres=#   e.salary,
+postgres=#   e.department,
+postgres=#   da.avg_salary
+postgres=# FROM employees e
+postgres=# JOIN department_averages da ON e.department = da.department
+postgres=# WHERE e.salary > da.avg_salary;
+ name | salary | department | avg_salary
+------+--------+------------+------------
+
+
+
