@@ -1,0 +1,25 @@
+INNER JOIN
+postgres=# SELECT c.name, c.email, o.order_date, o.total_amount FROM customers c INNER JOIN orders o ON c.customer_id = o.customer_id;
+LEFT JOIN
+postgres=# SELECT c.name, c.email, o.order_date, o.total_amount FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id;
+RIGHT JOIN
+postgres=# SELECT c.name, c.email, o.order_date, o.total_amount FROM customers c RIGHT JOIN orders o ON c.customer_id = o.customer_id;
+FULL OUTER JOIN
+postgres=# SELECT c.name, c.email, o.order_date, o.total_amount FROM customers c FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;
+CROSS JOIN
+postgres=# SELECT c.name, p.product_name FROM customers c CROSS JOIN products p;
+Multiple Table Join
+postgres=# SELECT c.name, o.order_date, oi.quantity, p.product_name, p.price FROM customers c INNER JOIN orders o ON c.customer_id = o.customer_id INNER JOIN order_items oi ON o.order_id = oi.order_id INNER JOIN products p ON oi.product_id = p.product_id;
+Self Join
+postgres=# SELECT e1.first_name AS employee, e2.first_name AS manager FROM employees e1 LEFT JOIN employees e2 ON e1.manager_id = e2.id;
+Join with Conditions
+postgres=# SELECT c.name, o.order_date, o.total_amount FROM customers c INNER JOIN orders o ON c.customer_id = o.customer_id WHERE o.order_date >= '2024-01-01' AND o.total_amount > 100;
+One-to-One Join
+postgres=# SELECT u.username, up.first_name, up.last_name, up.phone FROM users u LEFT JOIN user_profiles up ON u.user_id = up.user_id;
+One-to-Many Join
+postgres=# SELECT a.author_name, b.title, b.publication_year FROM authors a INNER JOIN books b ON a.author_id = b.author_id ORDER BY a.author_name, b.publication_year;
+Many-to-Many Join
+postgres=# SELECT s.student_name, c.course_name, e.enrollment_date, e.grade FROM students s INNER JOIN enrollments e ON s.student_id = e.student_id INNER JOIN courses c ON e.course_id = c.course_id WHERE e.grade IS NOT NULL ORDER BY s.student_name, c.course_name;
+Find customers without orders 
+postgres=# SELECT c.name FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id WHERE o.customer_id IS NULL;
+
