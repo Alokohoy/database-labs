@@ -1,9 +1,8 @@
-# PostgreSQL backups
+# PostgreSQL backups (actual backup files)
 *.dump
 *.sql.backup
 *.sql.bak
 backup_*.dump
-backup_*.sql
 
 # OS files
 .DS_Store
